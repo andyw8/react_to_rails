@@ -9,17 +9,20 @@ module ReactToRails
     end
 
     def run(args)
-      parse_options(args)
+      remaining_args = parse_options(args)
 
-      if @options[:path].nil? || @options[:path].empty?
-        puts "Error: path option is required"
+      # Get path from positional argument
+      path = remaining_args.first
+
+      if path.nil? || path.empty?
+        puts "Error: path argument is required"
         puts
         puts parser.help
         exit 1
       end
 
       # TODO: Add your main logic here
-      puts "Converting React component at path: #{@options[:path]}"
+      puts "Converting React component at path: #{path}"
     rescue OptionParser::InvalidOption => e
       puts "Error: #{e.message}"
       puts
@@ -31,17 +34,17 @@ module ReactToRails
 
     def parse_options(args)
       parser.parse!(args)
+      args # Return remaining arguments after parsing options
     end
 
     def parser
       @parser ||= OptionParser.new do |opts|
-        opts.banner = "Usage: react_to_rails [options]"
+        opts.banner = "Usage: react_to_rails [options] <path>"
+        opts.separator ""
+        opts.separator "Arguments:"
+        opts.separator "  path                         Path to React components (required)"
         opts.separator ""
         opts.separator "Options:"
-
-        opts.on("-p", "--path PATH", String, "Path to React component (required)") do |path|
-          @options[:path] = path
-        end
 
         opts.on("-h", "--help", "Show this help message") do
           puts opts
@@ -55,8 +58,8 @@ module ReactToRails
 
         opts.separator ""
         opts.separator "Examples:"
-        opts.separator "  react_to_rails --path ./src/component"
-        opts.separator "  react_to_rails -p /path/to/react/files"
+        opts.separator "  react_to_rails ./src/components"
+        opts.separator "  react_to_rails /path/to/react/files"
       end
     end
   end
