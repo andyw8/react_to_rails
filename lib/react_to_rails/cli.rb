@@ -19,7 +19,7 @@ module ReactToRails
       end
 
       # TODO: Add your main logic here
-      puts "Converting React components at path: #{@options[:path]}"
+      puts "Converting React component at path: #{@options[:path]}"
     rescue OptionParser::InvalidOption => e
       puts "Error: #{e.message}"
       puts
@@ -39,7 +39,7 @@ module ReactToRails
         opts.separator ""
         opts.separator "Options:"
 
-        opts.on("-p", "--path PATH", String, "Path to React components (required)") do |path|
+        opts.on("-p", "--path PATH", String, "Path to React component (required)") do |path|
           @options[:path] = path
         end
 
@@ -55,7 +55,7 @@ module ReactToRails
 
         opts.separator ""
         opts.separator "Examples:"
-        opts.separator "  react_to_rails --path ./src/components"
+        opts.separator "  react_to_rails --path ./src/component"
         opts.separator "  react_to_rails -p /path/to/react/files"
       end
     end
