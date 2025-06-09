@@ -18,13 +18,13 @@ This tool generates a View Component based on the supplied React component which
 
 For more details of the conversion process, you can look at the [prompt](./lib/react_to_rails/convert.rb).
 
-# Example
+# Demo
 
 Here is an example of the free [Two tiers with emphasized tier](https://tailwindcss.com/plus/ui-blocks/marketing/sections/pricing) component.
 
 Initial steps.
 
-- Start by select React in the dropdown
+- Select React in the dropdown
 - Switch to the Code view
 - Click the Copy icon
 - Paste that into a new file in your editor
@@ -86,16 +86,14 @@ The tool will output a report, and generate the view component files:
 <%= render(PricingComponent.new(tiers: tiers)) %>
 ```
 
-The example below illustrate the generated code:
+And here is the generated code:
 
-* [app/components/pricing_component.rb](./examples/pricing_component.rb)
 * [app/component/pricing_component.html.erb](./examples/pricing_component.html.erb).
-
-## Demo
+* [app/components/pricing_component.rb](./examples/pricing_component.rb)
 
 ## Limitations
 
-Components that make use JavaScript will need further conversion, e.g to use Stimulus intead.
+Components that make use of JavaScript will need further work, e.g to use Stimulus instead.
 
 ## Prerequisites
 
@@ -122,7 +120,7 @@ gem install react_to_rails
 
 You will need to provide an OpenAI API key. If you need to create a key, you can do so in the OpenAI [settings](https://platform.openai.com/settings).
 
-The gem looks for an `OPENAI_API_KEY` in you the environment (or you can pass it directly with `OPEN_API_KEY=... react_to_erb`).
+The gem looks for an `OPENAI_API_KEY` in the environment (or you can pass it directly with `OPEN_API_KEY=... react_to_erb`).
 
 ## Usage
 
