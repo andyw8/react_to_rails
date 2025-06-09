@@ -8,7 +8,7 @@ I created this tool for use with [Tailwind Plus](https://tailwindcss.com/plus/) 
 
 Tailwind Plus is a commercial product which provides high quality components for React and Vue.
 
-There are also plain HTML versions but they are awkward to work with, e.g.:
+There are also plain HTML versions but they are awkward to work with for Rails, e.g.:
 
 - You need to add ERB `<%= %>` placeholders for any content you're passing in.
 - The HTML is static so is missing any loops, conditionals, etc
