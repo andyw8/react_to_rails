@@ -4,7 +4,7 @@ This gem converts React components to Rails [View Components](https://viewcompon
 
 ## Background
 
-I created this tool use  with [Tailwind Plus](https://tailwindcss.com/plus/) (formerly Tailwind UI).
+I created this tool for use with [Tailwind Plus](https://tailwindcss.com/plus/) (formerly Tailwind UI).
 
 Tailwind Plus is a commercial product which provides high quality components for React and Vue.
 
@@ -15,6 +15,8 @@ There are also plain HTML versions but they are awkward to work with, e.g.:
 - Icons are converted to verbose SVG markup
 
 This tool generates a View Component based on the supplied React component which should be much more convenient for Rails.
+
+It's likely that you'll need to still do _some_ work, but it should save a lot of time.
 
 For more details of the conversion process, you can look at the [prompt](./lib/react_to_rails/convert.rb).
 
