@@ -1,28 +1,32 @@
 # ReactToRails
 
-TODO: Delete this and the text below, and describe your gem
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/react_to_rails`. To experiment with that code, run `bin/console` for an interactive prompt.
+Converts React components to Rails using AI.
 
 ## Installation
-
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
 
 Install the gem and add to the application's Gemfile by executing:
 
 ```bash
-bundle add UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+bundle add react_to_rails
 ```
 
 If bundler is not being used to manage dependencies, install the gem by executing:
 
 ```bash
-gem install UPDATE_WITH_YOUR_GEM_NAME_IMMEDIATELY_AFTER_RELEASE_TO_RUBYGEMS_ORG
+gem install react_to_rails
 ```
 
 ## Usage
 
-TODO: Write usage instructions here
+Use the command line tool to convert React components to Rails:
+
+```bash
+react_to_rails ./src/components
+```
+
+Options:
+- `-h, --help` - Show help message
+- `-v, --version` - Show version
 
 ## Development
 
