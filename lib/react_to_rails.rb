@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
-require_relative "react_to_rails/version"
-require_relative "react_to_rails/cli"
+require "zeitwerk"
 
 module ReactToRails
   class Error < StandardError; end
-  # Your code goes here...
+
+  # Set up Zeitwerk autoloader
+  loader = Zeitwerk::Loader.for_gem
+  loader.inflector.inflect("cli" => "CLI")
+  loader.setup
 end

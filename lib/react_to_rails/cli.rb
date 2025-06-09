@@ -13,6 +13,7 @@ module ReactToRails
 
       # Get path from positional argument
       path = remaining_args.first
+      name = remaining_args[1] || "ExampleComponent"
 
       if path.nil? || path.empty?
         puts "Error: path argument is required"
@@ -21,8 +22,8 @@ module ReactToRails
         exit 1
       end
 
-      # TODO: Add your main logic here
-      puts "Converting React component at path: #{path}"
+      client = OpenAI::Client.new
+      ReactToRails::Convert.for_path(path, client: client, name: name)
     rescue OptionParser::InvalidOption => e
       puts "Error: #{e.message}"
       puts
@@ -39,10 +40,11 @@ module ReactToRails
 
     def parser
       @parser ||= OptionParser.new do |opts|
-        opts.banner = "Usage: react_to_rails [options] <path>"
+        opts.banner = "Usage: react_to_rails [options] <path> [name]"
         opts.separator ""
         opts.separator "Arguments:"
         opts.separator "  path                         Path to React components (required)"
+        opts.separator "  name                         Component name (optional, defaults to ExampleComponent)"
         opts.separator ""
         opts.separator "Options:"
 
@@ -58,8 +60,8 @@ module ReactToRails
 
         opts.separator ""
         opts.separator "Examples:"
-        opts.separator "  react_to_rails ./src/components"
-        opts.separator "  react_to_rails /path/to/react/files"
+        opts.separator "  react_to_rails pricing.jsx"
+        opts.separator "  react_to_rails pricing.jsx PricingComponent"
       end
     end
   end

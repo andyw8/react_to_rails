@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require "openai"
+
 require_relative "../lib/react_to_rails"
 
 ReactToRails::CLI.new.run(ARGV)
