@@ -10,7 +10,7 @@ module ReactToRails
 
     def run(args)
       parse_options(args)
-      
+
       if @options[:path].nil? || @options[:path].empty?
         puts "Error: path option is required"
         puts
