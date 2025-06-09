@@ -121,7 +121,6 @@ module ReactToRails
       EOS
     end
 
-
     attr_reader :react_content, :client, :name, :summary, :view_component_ruby_code, :demo_erb_code, :erb_template
   end
 end
