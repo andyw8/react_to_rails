@@ -114,7 +114,8 @@ module ReactToRails
         * If the component relies on client-side behaviour, suggest to use Stimulus or Turbo instead. Also provide https://github.com/excid3/tailwindcss-stimulus-components as a reference.
         * If the code constains instructions such as "This example requires updating your template" then report those details.
         * Don't add HTML comment that weren't in the original.
-        * Let me know if any parts were not possible to accurately convert.
+        * Let the user know if any parts were not possible to accurately convert.
+        * If `html_safe` is used then warn the user to check for potential security issues.
 
         ```
         #{react_content}
