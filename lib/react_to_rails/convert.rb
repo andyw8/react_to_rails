@@ -48,9 +48,12 @@ module ReactToRails
       @erb_template = response.fetch("erb_template")
       @demo_erb_code = response.fetch("demo_erb_code")
 
+      puts @summary
+
+      return if @erb_template == "" || @view_component_ruby_code == ""
+
       File.write("app/components/#{component_file_name}.rb", @view_component_ruby_code)
       File.write("app/components/#{component_file_name}.html.erb", @erb_template)
-      puts @summary
       puts
       puts "### EXAMPLE USAGE ###"
       puts
