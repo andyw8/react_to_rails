@@ -11,16 +11,41 @@ module ReactToRails
     required :demo_erb_code, String
   end
 
-  class Convert
-    def initialize(react_content, client:, name:)
-      @react_content = react_content
-      @client = client
-      @name = name
+  class Client
+    def initialize(openai_client: nil)
+      @openai_client = openai_client || OpenAI::Client.new
     end
 
-    def self.for_path(path, client:, name:)
+    def call(prompt)
+      response = openai_client.responses.create(
+        model: :"gpt-4.1",
+        temperature: 0,
+        input: [
+          {role: "user", content: prompt}
+        ],
+        text: StructuredResponse
+      )
+
+      JSON.parse(response.output.first.content.first.to_json).fetch("parsed")
+    end
+
+    private
+
+    attr_reader :openai_client
+  end
+
+  class Convert
+    attr_reader :react_content, :client, :name, :summary, :view_component_ruby_code, :demo_erb_code, :erb_template
+
+    def initialize(react_content, name:, client: nil)
+      @react_content = react_content
+      @name = name
+      @client = client || Client.new
+    end
+
+    def self.for_path(path, name:)
       react_content = File.read(path)
-      new(react_content, client: client, name: name).call
+      new(react_content, name: name)
     end
 
     def call
@@ -30,18 +55,7 @@ module ReactToRails
       puts
       puts "Waiting for OpenAI to respond..."
 
-      response = client.responses.create(
-        model: :"gpt-4.1",
-        temperature: 0,
-        input: [
-          {role: "user", content: prompt}
-        ],
-        text: StructuredResponse
-      )
-
-      puts "### RESPONSE ###"
-
-      response = JSON.parse(response.output.first.content.first.to_json).fetch("parsed")
+      response = Client.new.call(prompt)
 
       @summary = response.fetch("summary")
       @view_component_ruby_code = response.fetch("view_component_ruby_code")
@@ -52,19 +66,17 @@ module ReactToRails
 
       return if @erb_template == "" || @view_component_ruby_code == ""
 
-      File.write("app/components/#{component_file_name}.rb", @view_component_ruby_code)
-      File.write("app/components/#{component_file_name}.html.erb", @erb_template)
       puts
       puts "### EXAMPLE USAGE ###"
       puts
       puts @demo_erb_code
     end
 
-    private
-
     def component_file_name
       @name.gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase
     end
+
+    private
 
     def prompt
       <<~EOS
@@ -128,7 +140,5 @@ module ReactToRails
         ```
       EOS
     end
-
-    attr_reader :react_content, :client, :name, :summary, :view_component_ruby_code, :demo_erb_code, :erb_template
   end
 end

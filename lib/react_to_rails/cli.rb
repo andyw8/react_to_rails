@@ -22,8 +22,11 @@ module ReactToRails
         exit 1
       end
 
-      client = OpenAI::Client.new
-      ReactToRails::Convert.for_path(path, client: client, name: name)
+      convert = ReactToRails::Convert.for_path(path, name: name)
+      convert.call
+
+      File.write("app/components/#{convert.component_file_name}.rb", convert.view_component_ruby_code)
+      File.write("app/components/#{convert.component_file_name}.html.erb", convert.erb_template)
     rescue OptionParser::InvalidOption => e
       puts "Error: #{e.message}"
       puts
