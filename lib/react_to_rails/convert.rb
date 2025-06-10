@@ -110,7 +110,7 @@ module ReactToRails
         * Replace `<button>` tags with Rails `buton_tag` helper calls.
         * Replace `onClick` events with theoretical Stimulus calls.
         * Assume a heroicons helper is available, e.g.: <%= heroicon "magnifying-glass", options: { class: "text-primary-500" } %>
-        * Asssume a `class_names` helper is available which works just like React's `classNames` helper.
+        * Assume a `class_names` helper is available which works just like React's `classNames` helper.
         * If the component relies on client-side behaviour, suggest to use Stimulus or Turbo instead. Also provide https://github.com/excid3/tailwindcss-stimulus-components as a reference.
         * If the code constains instructions such as "This example requires updating your template" then report those details.
         * Don't add HTML comment that weren't in the original.
