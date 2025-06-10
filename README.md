@@ -90,8 +90,8 @@ The tool will output a report, and generate the view component files:
 
 And here is the generated code:
 
-* [app/component/pricing_component.html.erb](./examples/pricing_component.html.erb).
-* [app/components/pricing_component.rb](./examples/pricing_component.rb)
+* [app/component/pricing_component.html.erb](./test/approvals/pricing_component.html.erb).
+* [app/components/pricing_component.rb](./test/approvals/pricing_component.rb)
 
 ## Limitations
 
