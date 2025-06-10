@@ -48,7 +48,6 @@ module ReactToRails
       @erb_template = response.fetch("erb_template")
       @demo_erb_code = response.fetch("demo_erb_code")
 
-      component_file_name = @name.gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase
       File.write("app/components/#{component_file_name}.rb", @view_component_ruby_code)
       File.write("app/components/#{component_file_name}.html.erb", @erb_template)
       puts @summary
@@ -59,6 +58,10 @@ module ReactToRails
     end
 
     private
+
+    def component_file_name
+      @name.gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase
+    end
 
     def prompt
       <<~EOS
