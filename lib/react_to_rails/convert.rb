@@ -73,7 +73,40 @@ module ReactToRails
     end
 
     def component_file_name
-      @name.gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase
+      class_name = @name.split('::').last
+      # Remove existing "Component" suffix if present, then add it back
+      base_name = class_name.sub(/Component$/, '')
+      base_name.gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase + "_component"
+    end
+
+    def component_file_path
+      parts = @name.split('::')
+      namespace_path = parts[0..-2].map(&:downcase).join('/')
+      class_name = parts.last
+      # Remove existing "Component" suffix if present, then add it back
+      base_name = class_name.sub(/Component$/, '')
+      file_name = base_name.gsub(/([a-z\d])([A-Z])/, '\1_\2').downcase + "_component"
+      
+      if namespace_path.empty?
+        file_name
+      else
+        "#{namespace_path}/#{file_name}"
+      end
+    end
+
+    def full_component_class_name
+      parts = @name.split('::')
+      namespace = parts[0..-2].join('::')
+      class_name = parts.last
+      # Remove existing "Component" suffix if present, then add it back
+      base_name = class_name.sub(/Component$/, '')
+      full_class_name = base_name + "Component"
+      
+      if namespace.empty?
+        full_class_name
+      else
+        "#{namespace}::#{full_class_name}"
+      end
     end
 
     private
@@ -84,7 +117,7 @@ module ReactToRails
 
         Convert this React JSX component into a View Component for use with Ruby on Rails.
 
-        The component should be named: #{@name}
+        The component should be named: #{full_component_class_name}
 
         The view component consists of two files.
 
@@ -95,6 +128,19 @@ module ReactToRails
         class MessageComponent < ViewComponent::Base
           def initialize(name:)
             @name = name
+          end
+        end
+        ```
+
+        For namespaced components, wrap the class in the appropriate module:
+
+        ```
+        # app/components/commerce/message_component.rb
+        module Commerce
+          class MessageComponent < ViewComponent::Base
+            def initialize(name:)
+              @name = name
+            end
           end
         end
         ```
