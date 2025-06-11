@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "optparse"
+require "fileutils"
 
 module ReactToRails
   class CLI
@@ -25,8 +26,12 @@ module ReactToRails
       convert = ReactToRails::Convert.for_path(path, name: name)
       convert.call
 
-      File.write("app/components/#{convert.component_file_name}.rb", convert.view_component_ruby_code)
-      File.write("app/components/#{convert.component_file_name}.html.erb", convert.erb_template)
+      # Create directory structure for namespaced components
+      component_dir = File.dirname("app/components/#{convert.component_file_path}")
+      FileUtils.mkdir_p(component_dir) unless component_dir == "app/components"
+
+      File.write("app/components/#{convert.component_file_path}.rb", convert.view_component_ruby_code)
+      File.write("app/components/#{convert.component_file_path}.html.erb", convert.erb_template)
     rescue OptionParser::InvalidOption => e
       puts "Error: #{e.message}"
       puts
@@ -48,6 +53,7 @@ module ReactToRails
         opts.separator "Arguments:"
         opts.separator "  path                         Path to React components (required)"
         opts.separator "  name                         Component name (optional, defaults to ExampleComponent)"
+        opts.separator "                               Supports namespaced names like Commerce::PricingComponent"
         opts.separator ""
         opts.separator "Options:"
 
@@ -65,6 +71,8 @@ module ReactToRails
         opts.separator "Examples:"
         opts.separator "  react_to_rails pricing.jsx"
         opts.separator "  react_to_rails pricing.jsx PricingComponent"
+        opts.separator "  react_to_rails pricing.jsx Commerce::PricingComponent"
+        opts.separator "  react_to_rails pricing.jsx Admin::Dashboard::Widget"
       end
     end
   end
