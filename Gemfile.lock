@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    react_to_rails (0.1.0)
+    react_to_rails (0.2.0)
       openai (~> 0.6)
       zeitwerk (~> 2.7)
 
