@@ -27,6 +27,7 @@ module ReactToRails
 
       File.write("app/components/#{convert.component_file_name}.rb", convert.view_component_ruby_code)
       File.write("app/components/#{convert.component_file_name}.html.erb", convert.erb_template)
+      File.write("test/components/#{convert.component_file_name}_test.rb", convert.view_component_test_ruby_code)
     rescue OptionParser::InvalidOption => e
       puts "Error: #{e.message}"
       puts

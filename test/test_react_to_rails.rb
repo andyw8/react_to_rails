@@ -9,16 +9,19 @@ class TestReactToRails < Minitest::Test
   end
 
   def test_approvals
-    expected_rb = ERB::Formatter.format(File.read("test/approvals/pricing_component.rb"))
-    expected_erb = ERB::Formatter.format(File.read("test/approvals/pricing_component.html.erb"))
+    expected_rb = ERB::Formatter.format(File.read("approvals/pricing_component.rb"))
+    expected_test_rb = ERB::Formatter.format(File.read("approvals/pricing_component_test.rb"))
+    expected_erb = ERB::Formatter.format(File.read("approvals/pricing_component.html.erb"))
 
     convert = ReactToRails::Convert.for_path("examples/pricing.jsx", name: "Pricing")
     convert.call
 
     actual_rb = ERB::Formatter.format(convert.view_component_ruby_code)
+    actual_test_rb = ERB::Formatter.format(convert.view_component_test_ruby_code)
     actual_erb = ERB::Formatter.format(convert.erb_template)
 
     assert_equal expected_rb, actual_rb
+    assert_equal actual_test_rb, expected_test_rb
     assert_equal expected_erb, actual_erb
   end
 

@@ -14,7 +14,7 @@ There are also plain HTML versions but they are awkward to work with for Rails, 
 - The HTML is static so is missing any loops, conditionals, etc
 - Icons are converted to verbose SVG markup
 
-This tool generates a View Component based on the supplied React component which should be much more convenient for Rails.
+This tool generates a View Component based on the supplied React component which should be much more convenient for Rails. It also generates a corresponding test.
 
 It's likely that you'll need to still do _some_ work, but it should save a lot of time.
 

@@ -8,6 +8,7 @@ module ReactToRails
     required :summary, String, doc: "A summary of what was done"
     required :erb_template, String
     required :view_component_ruby_code, String
+    required :view_component_test_ruby_code, String
     required :demo_erb_code, String
   end
 
@@ -35,7 +36,14 @@ module ReactToRails
   end
 
   class Convert
-    attr_reader :react_content, :client, :name, :summary, :view_component_ruby_code, :demo_erb_code, :erb_template
+    attr_reader :react_content,
+      :client,
+      :name,
+      :summary,
+      :view_component_ruby_code,
+      :view_component_test_ruby_code,
+      :demo_erb_code,
+      :erb_template
 
     def initialize(react_content, name:, client: nil)
       @react_content = react_content
@@ -61,6 +69,7 @@ module ReactToRails
       @view_component_ruby_code = response.fetch("view_component_ruby_code")
       @erb_template = response.fetch("erb_template")
       @demo_erb_code = response.fetch("demo_erb_code")
+      @view_component_test_ruby_code = response.fetch("view_component_test_ruby_code")
 
       puts @summary
 
@@ -114,6 +123,32 @@ module ReactToRails
         <% name = "World" %>
 
         <%= render(MessageComponent.new(name: name)) %>
+        ```
+
+        Also generate a basic component test, for example:
+
+        ```
+        require "test_helper"
+
+        class ExampleComponent < ActiveSupport::TestCase
+          include ViewComponent::TestHelpers
+
+          test "it renders correctly" do
+            title = "Component title"
+            description = "Component description"
+            people = [
+              { name: 'Andy', title: 'Developer' }
+            ]
+            example_component = ExampleComponent.new(title: title, description: description, people: people)
+
+            render_inline(example_component)
+
+            assert_selector "h1", text: title
+            assert_selector "p", text: description
+            assert_selector "td", text: people[0][:name]
+            assert_selector "td", text: people[0][:title]
+          end
+        end
         ```
 
         Notes:
